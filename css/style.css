@@ -76,7 +76,7 @@ nav.desktop a:last-child {
 
 nav.desktop a:hover { opacity: 0.45; }
 
-nav.desktop a.two-line {
+nav.desktop a[href="works.html"] {
   line-height: 1.3;
   text-align: center;
 }
