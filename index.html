@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElDoPortfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header id="site-header">
+         <a href="#" class="wordmark">YELYZAVETA DOLHA</a>   
+        <nav class="desktop">
+            <a href="index.html" class="active">About Me</a>
+            <a href="portfolio.html">Academic</a>
+            <a href="works.html">Production</a>
+            <a href="contact.html">Contact Me</a>
+            </nav>
+            
+            <button class="burger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+        </header>
+      
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html" class="active">About Me</a>
+        <a href="portfolio.html">Projects</a>
+        <a href="works.html">Video/Photo Work</a>
+        <a href="contact.html">Contact Me</a>
+    </div>
+      
+    <main>
+        <div class="page-layout">
+            <!-- LEFT: sticky photo column -->
+            <aside class="photo-col">
+                <img src="images/liza.jpg" alt="Yelizaveta's Photo">
+            </aside>
+ 
+            <!-- RIGHT: scrollable text column -->
+            <div class="text-col">
+                <h1>Yelizaveta Dolha</h1>
+                <p>There is gonna be text about Liza. Add as much as you like — this column scrolls independently while the photo stays pinned on the left.</p>
+ 
+                <h2>My Experience</h2>
+                <p>There we gonna put her experiences. You can add more paragraphs, lists, or any other content here and it will keep flowing downward.</p>
+ 
+                <h2>Another Section</h2>
+                <p>More content can go here, and the column will simply grow taller than the photo, which remains anchored to the top of the viewport.</p>
+            </div>
+        </div>
+    </main>
+ 
+    <footer>
+        <p>Made by DelLizabeth</p>
+    </footer>
+      
+      
+      <script>
+    // Scroll → frosted header
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // Hamburger toggle
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    burger.addEventListener('click', () => {
+      const open = burger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>        
+    </body>
+</html>
