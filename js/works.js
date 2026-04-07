@@ -1,4 +1,4 @@
-jsdocument.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
 
   // ── Scroll → frosted header ──
   const header = document.getElementById('site-header');
@@ -33,7 +33,6 @@ jsdocument.addEventListener('DOMContentLoaded', () => {
       const section = document.getElementById(targetId);
       if (!section) { return; }
 
-      // collect cards belonging to this section
       const sectionCards = [];
       let el = section.nextElementSibling;
       while (el && !el.classList.contains('section-label')) {
@@ -43,7 +42,6 @@ jsdocument.addEventListener('DOMContentLoaded', () => {
         el = el.nextElementSibling;
       }
 
-      // flash each card
       sectionCards.forEach(card => {
         card.classList.remove('flash');
         void card.offsetWidth;
@@ -53,7 +51,6 @@ jsdocument.addEventListener('DOMContentLoaded', () => {
         }, { once: true });
       });
 
-      // mark active sidebar link
       sidebarLinks.forEach(l => l.classList.remove('active'));
       link.classList.add('active');
     });

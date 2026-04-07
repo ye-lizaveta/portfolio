@@ -223,25 +223,26 @@ main {
 /* ── White hover box ── */
 .project-overlay {
   position: absolute;
-  bottom: 3rem;
-  left: 1.5rem;
-  background: #fff;
-  padding: 1rem 1.2rem;
-  max-width: 60%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(6px);
+  background: rgba(255, 255, 255, 0.92);
+  padding: 1.5rem 2rem;
+  width: 80%;
+  text-align: center;
   opacity: 0;
-  transform: translateY(6px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
 }
 
 .project-card:hover .project-overlay {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(-50%, -50%) translateY(0);
 }
 
 .project-overlay h3 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem;
+  font-size: 3rem;
   font-weight: 400;
   color: var(--text);
   margin-bottom: 0.3rem;
@@ -249,20 +250,10 @@ main {
 
 .project-overlay p {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.75rem;
+  font-size: 1.5rem;
   font-weight: 300;
   color: #555;
   line-height: 1.5;
-}
-
-.card-caption {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 300;
-  color: #555;
-  padding: 0.6rem 0.8rem;
-  background: #fff;
-  border-top: 1px solid rgba(0,0,0,0.07);
 }
 
 /* ── TWO-COLUMN LAYOUT ── */
