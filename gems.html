@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElDoPortfolio</title>
+    <link rel="stylesheet" href="css/gems.css">
+    </head>
+    <body>
+        <header id="site-header">
+         <a href="#" class="wordmark">YELYZAVETA DOLHA</a>   
+        <nav class="desktop">
+            <a href="index.html" class="active">About Me</a>
+            <a href="works.html" class="two-line">Design<br>Work</a>
+            <a href="portfolio.html" class="two-line">Media<br>Production</a>
+            <a href="contact.html">Contact Me</a>
+            </nav>
+            
+            <button class="burger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+        </header>
+      
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html" class="active">About Me</a>
+        <a href="works.html">Design<br>Work</a>
+        <a href="portfolio.html">Media<br>Production</a>
+        <a href="contact.html">Contact Me</a>
+    </div>
+<main>
+
+</main>
+          <footer>
+        <p>Made by DelLizabeth</p>
+    </footer>
+      
+      <script>
+    // Scroll → frosted header
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // Hamburger toggle
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    burger.addEventListener('click', () => {
+      const open = burger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>        
+    </body>
+</html>
