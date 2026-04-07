@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElDoPortfolio</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/works.css">
+    <script src="js/works.js"></script>
     </head>
     <body>
         <header id="site-header">
@@ -23,39 +24,86 @@
       
     <div class="mobile-menu" id="mobile-menu">
         <a href="index.html" class="active">About Me</a>
-        <a href="portfolio.html">Work</a>
-        <a href="works.html">Media<br>Production</a>
+        <a href="works.html">Desigmn<br>Work</a>
+        <a href="portfolio.html">Media<br>Production</a>
         <a href="contact.html">Contact Me</a>
     </div>
+<main>
+  <div class="filter-layout">
+
+    <aside class="filter-sidebar">
+      <div class="filter-group">
+        <a href="#ux" class="sidebar-link">Design</a>
+        <a href="#graphic" class="sidebar-link">Graphic Design</a>
+        <a href="#3d" class="sidebar-link">3D Prints</a>
+        <a href="#coding" class="sidebar-link">Coding</a>
+      </div>
+    </aside>
+
+    <div class="projects-grid">
+
+      <!-- DESIGN -->
+      <div class="section-label" id="ux">UX Design</div>
+
+      <a href="project1.html" class="project-card" data-tags="ux">
+        <img src="images/project1.jpg" alt="LitNest">
+        <div class="project-overlay">
+          <h3>LitNest</h3>
+          <p>Short description here.</p>
+        </div>
+        <div class="card-caption">LitNest — UX Design</div>
+      </a>
+
+      <a href="project2.html" class="project-card" data-tags="ux">
+        <img src="images/project2.jpg" alt="LearnBetter">
+        <div class="project-overlay">
+          <h3>LearnBetter</h3>
+          <p>Short description here.</p>
+        </div>
+        <div class="card-caption">Steve Sheds - UX Design</div>
+      </a>
+
+      <!-- GRAPHIC DESIGN -->
+      <div class="section-label" id="graphic">Graphic Design</div>
+
+      <a href="project4.html" class="project-card" data-tags="graphic">
+        <img src="images/project4.jpg" alt="Careers Posters">
+        <div class="project-overlay">
+          <h3>Careers Posters</h3>
+          <p>Short description here.</p>
+        </div>
+        <div class="card-caption">Careers Posters — Graphic Design</div>
+      </a>
+
+      <!-- 3D PRINTS -->
+      <div class="section-label" id="3d">3D Prints</div>
+
+      <a href="project5.html" class="project-card" data-tags="3d">
+        <img src="images/project5.jpg" alt="DeskStop">
+        <div class="project-overlay">
+          <h3>DeskStop</h3>
+          <p>Short description here.</p>
+        </div>
+        <div class="card-caption">Neurotalki 3D</div>
+      </a>
+
+      <!-- CODING -->
+      <div class="section-label" id="coding">Coding</div>
+
+      <a href="project6.html" class="project-card" data-tags="coding">
+        <img src="images/project6.jpg" alt="Coding Project">
+        <div class="project-overlay">
+          <h3>Coding Project</h3>
+          <p>Short description here.</p>
+        </div>
+        <div class="card-caption">Project — Coding</div>
+      </a>
+
+    </div>
+  </div>
+</main>
           <footer>
         <p>Made by DelLizabeth</p>
-    </footer>
-      
-      <script>
-    // Scroll → frosted header
-    const header = document.getElementById('site-header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 20);
-    }, { passive: true });
-
-    // Hamburger toggle
-    const burger = document.getElementById('burger');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    burger.addEventListener('click', () => {
-      const open = burger.classList.toggle('open');
-      mobileMenu.classList.toggle('open', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-
-    // Close on link click
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        burger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-    });
-  </script>        
+    </footer>     
     </body>
 </html>
