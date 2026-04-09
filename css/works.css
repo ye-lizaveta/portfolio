@@ -207,6 +207,7 @@ main {
   flex-direction: column;
   cursor: pointer;
   text-decoration: none;
+  border-radius: 12px; 
 }
 
 .project-card img {
@@ -215,7 +216,6 @@ main {
   object-fit: cover;
   display: block;
   transition: transform 0.4s ease;
-  border-radius: 12px; 
 }
 
 .project-card:hover img {
