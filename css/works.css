@@ -183,7 +183,6 @@ main {
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
   padding: 2rem;
-
 }
 
 
