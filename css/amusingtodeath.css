@@ -208,6 +208,21 @@ main {
   padding: 3rem 1.5rem;
 }
 
+.content-photo-pair {
+  display: flex;
+  gap: 1rem;
+  width: 60%;
+  margin: 1.5rem auto 0;
+  padding: 3rem 1.5rem;
+}
+
+.content-photo-pair img {
+  width: 50%;
+  height: 500px;      /* same fixed height forces both to match */
+  object-fit: cover;  /* crops to fill without stretching */
+  object-position: center; /* crops from the middle */
+}
+
 .video-container {
   position: relative;
   width: 100%;
