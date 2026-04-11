@@ -202,11 +202,12 @@ main {
   background: rgba(255,255,255,0.25);
 }
 .content-photo {
-  width: 100%;
+  width: 60%;
   display: block;
-  margin-top: 1.5rem;
+  margin: 1.5rem auto 0;
   padding: 3rem 1.5rem;
 }
+
 .video-container {
   position: relative;
   width: 100%;
