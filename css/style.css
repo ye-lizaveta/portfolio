@@ -80,74 +80,154 @@ nav.desktop a[href="works.html"] {
   line-height: 1.3;
   text-align: center;
 }
+
 /* ── BODY ── */
 body {
   background: #f5f5f5;
   font-family: 'Montserrat', sans-serif;
   color: var(--text);
-  /* push body below fixed header, stretch to full viewport min */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding-top: var(--header-h);
 }
 
-/* ── MAIN grows to fill remaining space so footer is pushed down ── */
 main {
   flex: 1;
 }
 
-/* ── TWO-COLUMN LAYOUT ── */
+/* ── PAGE LAYOUT ── */
 .page-layout {
-  display: flex;
-  align-items: stretch;   /* children align to the top */
-  gap: 3rem;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 4rem 3rem;
 }
 
-.photo-col {
-  flex: 0 0 320px;
+/* ── PHOTO ── */
+.photo {
+  float: right;
+  width: 280px;
+  margin: 6px 0 32px 56px;
 }
 
-.photo-col img {
+.photo img {
   width: 100%;
-  height: auto;
-  border-radius: 4px;
   display: block;
+  border-radius: 4px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.12);
 }
 
-/* RIGHT column: text flows freely */
-.text-col {
-  flex: 1;
-  min-width: 0;              /* prevent flex overflow */ 
-  min-height: 100vh;
+.clearfix::after {
+  content: '';
+  display: table;
+  clear: both;
 }
 
-.text-col h1 {
+/* ── NAME & SUBTITLE ── */
+h1 {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 3rem;
   font-weight: 300;
-  margin-bottom: 1.25rem;
+  color: #1a1a1a;
+  margin-bottom: 6px;
   line-height: 1.1;
 }
 
-.text-col h2 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 2rem;
+.subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #999;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+/* ── BODY TEXT ── */
+p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
   font-weight: 300;
-  margin-top: 2.5rem;
+  line-height: 1.85;
+  color: #333;
   margin-bottom: 1rem;
 }
 
-.text-col p,
-.text-col ul {
-  font-size: 1rem;
-  line-height: 1.75;
-  color: #333;
-  margin-bottom: 1rem;
+p.intro {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 300;
+  font-style: italic;
+  color: #1a1a1a;
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+/* ── SKILLS SECTION ── */
+.skills-section {
+  clear: both;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.skill-group {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.skill-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: #999;
+  text-transform: uppercase;
+  min-width: 180px;
+  flex-shrink: 0;
+}
+
+.skill-tags {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: #444;
+}
+
+.skill-tags .tag::after {
+  content: ' · ';
+  color: #ccc;
+}
+
+.skill-tags .tag:last-child::after {
+  content: '';
+}
+
+/* ── FOOTER LINE ── */
+.footer-line {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: #999;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.footer-line span {
+  margin: 0 6px;
+  color: #ccc;
 }
 
 /* ── FOOTER ── */
@@ -162,7 +242,7 @@ footer {
   margin-top: 4rem;
 }
 
-/* ── MOBILE MENU (kept from original) ── */
+/* ── MOBILE MENU ── */
 .mobile-menu {
   display: none;
 }
@@ -174,19 +254,17 @@ footer {
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .page-layout {
-    flex-direction: column;
     padding: 2rem 1.5rem;
-    gap: 2rem;
   }
 
-  .photo-col {
-    flex: none;
+  .photo {
+    float: none;
     width: 100%;
-    position: static;
+    margin: 0 0 2rem 0;
   }
 
-  .photo-col img {
-    max-width: 280px;
+  .photo img {
+    max-width: 260px;
     margin: 0 auto;
   }
 
@@ -236,5 +314,14 @@ footer {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #111;
+  }
+
+  .skill-group {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .skill-label {
+    min-width: unset;
   }
 }
