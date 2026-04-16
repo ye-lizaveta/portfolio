@@ -326,6 +326,38 @@ main {
   user-select: none;
 }
 
+/* Expand button */
+.btn-expand {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: rgba(255,255,255,0.92);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-expand:hover {
+  background: #fff;
+  transform: scale(1.08);
+}
+
+.btn-expand svg {
+  width: 16px;
+  height: 16px;
+  stroke: #333;
+  fill: none;
+  stroke-width: 2;
+}
+
 .carousel-dots {
   display: flex;
   justify-content: center;
@@ -347,6 +379,86 @@ main {
 .carousel-dots .dot.active {
   background: #333;
   transform: scale(1.25);
+}
+
+/* ── Lightbox ── */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox.open {
+  display: flex;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 88vh;
+  border-radius: 4px;
+  object-fit: contain;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+  animation: lb-in 0.25s ease;
+}
+
+@keyframes lb-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+.lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+.lightbox-nav svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
+.lb-prev { left: 20px; }
+.lb-next { right: 20px; }
+
+.lightbox-counter {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+  letter-spacing: 0.1em;
 }
 /* ── TWO-COLUMN LAYOUT ── */
 .page-layout {
