@@ -161,6 +161,27 @@ main {
   display: block;
 }
 
+img {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+   margin: auto;
+}
+
+.content-photo {
+  width: 47%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.content-photoo {
+  width: 47%;
+  object-position: center;
+  display: block;
+}
+
 .play-overlay {
   position: absolute;
   inset: 0;
@@ -192,6 +213,66 @@ main {
 .play-btn:hover {
   transform: scale(1.1);
 }
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.carousel-track img {
+  min-width: 100%;
+  width: 100%;
+  height: 550px;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.7);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+.carousel-btn:hover { background: rgba(255,255,255,0.95); }
+.carousel-btn.prev { left: 12px; }
+.carousel-btn.next { right: 12px; }
+
+.carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dot.active { background: white; }
 /* ── FOOTER ── */
 footer {
   line-height: 40px;
