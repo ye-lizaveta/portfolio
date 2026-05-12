@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redbreast Whiskey Launch</title>
+    <title>Marketing Campaign for Redbreast Whiskey</title>
     <link rel="stylesheet" href="css/redbreast.css">
     </head>
     <body>
@@ -28,7 +28,109 @@
         <a href="contact.html">Contact Me</a>
     </div>
 <main>
-
+<section class="video-section">
+<div class="content-wrapper">
+  <br>
+        <h1>Marketing Campaign for Redbreast Whiskey</h1>
+    <p><b><b>The Master's Atelier</b></b> is an immersive brand installation designed for the launch of Redbreast Mizunara Edition whiskey. </p>
+  <p>Visitors move through a physical bar environment, completing four sensory challenges identifying a scent, matching wood types, 
+    mapping a flavour profile, and answering a personal questionnaire each one unlocking the next stage of the experience and culminating
+    in a personalised Whiskey Taster Certificate and an engraved keepsake vessel.</p>
+   <video autoplay muted loop playsinline>
+    <source src="videos/redbreast.mp4" type="video/mp4">
+  </video>
+    <p>The interactive bar surface was prototyped as self-contained HTML/CSS/JavaScript files featuring a real-time radar diagram 
+      with free-drag input, NFC-triggered feedback states, and dynamically generated results pulled from Redbreast's official tasting
+      notes. The full installation was visualised in Blender, including animated LED feedback strips, keyframed error and success states 
+      for each challenge, and a complete atmospheric bar scene built for presentation and client review.</p>
+  <p>The project ran through the full design pipeline: concept development, audience personas, iterative Figma wireframing, 
+    user testing, and accessibility review, before reaching final interactive prototypes and a rendered Blender animation.
+</p>
+  <br>
+<h1>Keeper I - Sandlewood (Scent Identification)</h1>
+  <p>Keeper I requires the following hardware and physical props:
+A fragrance spray bottle to accommodate visitors at the station, scented to match sandalwood.
+Paper scent strips available at each seat
+Three NFC readers embedded into the bar surface beneath each of the three labelled scent circles (Sandalwood, Pine, Vanilla)
+Smart LED strip or LED panel beneath the bar surface to produce the progressive illumination effect.</p>
+    <img src="images/keeper1.jpg" alt="Photo" class="content-photo">
+  <h1>Keeper II - Mizunara Oak (Wood Matching)</h1>
+  <p>Keeper II requires the following physical props:
+Three wooden coasters per visitor station, made from Aspen, Beech, and Mizunara Oak.
+Each coaster must have a meaningfully different grain texture, weight, and colour so visitors can distinguish them.
+Each coaster must have a unique NFC tag embedded underneath.
+</p>
+      <img src="images/keeper2.jpeg" alt="Photo" class="content-photo">
+    <h1>Keeper III - Spice (Taste & Clock Interaction)</h1>
+  <p>An NFC reader is required at the clock zone on the bar surface to detect when the visitor places their vessel down and 
+    trigger the interaction. The bar surface must support smooth, real-time finger-drag tracking to register the clock-hand 
+    drag gesture accurately. A hexagonal radar diagram is required to display the whiskey's taste profile.</p>
+        <img src="images/keeper4.jpg" alt="Photo" class="content-photo">
+      <h1>Keeper IV - Orchard Fruit (Personalised Quiz & Reveal)</h1>
+  <p>The bar surface must support tap inputs for selecting buttons for the four quiz questions. A visual of an orchard tree 
+    is required on the panel of the surface, capable of animating from bare to fully blossomed in real time as questions are answered.
+    Calculations are needed to determine the visitor's orchard fruit result (Apple, Pear, Plum, etc.) from the combination of answers given. 
+    The reveal screen must dynamically populate with the visitor's name and a generated statistic. A laser engraver is required at the bartender
+    station to personalise the visitor's vessel during this stage.</p>
+          <img src="images/pear.jpg" alt="Photo" class="content-photo">
+        <h1>End of Experience - Keepsakes & Visitor Output</h1>
+  <p>The engraved vessel (cask mug or whiskey glass) is returned to the visitor after Keeper IV is complete.
+A digital Redbreast Whiskey Taster Certificate, with the visitor's name, orchard fruit result, visitor number, and date, with a shareable link of the 
+    certificate via a QR code/link, 
+    so visitors can share the experience.</p>
+  <p><b><b>Tools:</b></b>  Blender · Figma · HTML · CSS · JavaScript</p>
+  <h2>Presentation Preview</h2>
+<iframe src="pdfjs/web/viewer.html?file=redbreast.pdf" title="Presentation" width="100%" height="800px" style="border: none;"></iframe>
+<div style="display: flex; justify-content: center; gap: 16px; margin: 2rem auto;">
+  <a href="files/" download style="
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background-color: #f0f4ee;
+    border: 1.5px solid #b0c4a8;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2d4a2d;
+    font-family: inherit;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  ">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="12" y1="11" x2="12" y2="17"/>
+      <polyline points="9 14 12 17 15 14"/>
+    </svg>
+    Download DOCX
+  </a>
+  <a href="https://drive.google.com/file/d/1Ix4yH83gc4_Fq0IXFKjsEUD_d4-nthwO/view?usp=sharing" download style="
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background-color: #f0f4ee;
+    border: 1.5px solid #b0c4a8;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2d4a2d;
+    font-family: inherit;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  ">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="12" y1="11" x2="12" y2="17"/>
+      <polyline points="9 14 12 17 15 14"/>
+    </svg>
+    Download BLENDER
+  </a>
+</div>
+  </div>
+</section>
 </main>
           <footer>
         <p>Made by DelLizabeth</p>
