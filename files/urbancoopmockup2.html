@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Urban Co-op &mdash; Google Ad Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', Arial, sans-serif;
+      background: #f1f3f4;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .page-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 20px;
+      padding-left: 2px;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border: 1.5px solid #dfe1e5;
+      border-radius: 24px;
+      padding: 10px 18px;
+      margin-bottom: 20px;
+    }
+
+    .search-bar input {
+      border: none;
+      outline: none;
+      font-size: 15px;
+      flex: 1;
+      color: #202124;
+      background: transparent;
+      font-family: 'DM Sans', Arial, sans-serif;
+    }
+
+    .search-icon {
+      color: #9aa0a6;
+      font-size: 18px;
+    }
+
+    .results-label {
+      font-size: 12px;
+      color: #70757a;
+      margin-bottom: 16px;
+      padding-left: 2px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      color: #9aa0a6;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 22px 0 10px;
+      padding-left: 2px;
+    }
+
+    .ad-card {
+      background: #fff;
+      border: 0.5px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+    }
+
+    .ad-badge {
+      display: inline-block;
+      font-size: 11px;
+      color: #006621;
+      border: 1px solid #006621;
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin-bottom: 7px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .ad-url {
+      font-size: 13px;
+      color: #202124;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ad-url .domain { font-weight: 500; }
+    .ad-url .path { color: #5f6368; }
+
+    .ad-check {
+      width: 14px;
+      height: 14px;
+      background: #4a9c53;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .ad-check::after {
+      content: '';
+      width: 6px;
+      height: 4px;
+      border-left: 1.5px solid #fff;
+      border-bottom: 1.5px solid #fff;
+      transform: rotate(-45deg) translateY(-1px);
+      display: block;
+    }
+
+    .ad-headline {
+      font-size: 19px;
+      color: #1a0dab;
+      line-height: 1.3;
+      margin-bottom: 5px;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .ad-headline:hover { text-decoration: underline; }
+
+    .ad-desc {
+      font-size: 13px;
+      color: #4d5156;
+      line-height: 1.65;
+    }
+
+    .ad-desc strong { color: #202124; font-weight: 500; }
+
+    .ad-extensions {
+      margin-top: 11px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ext-link {
+      font-size: 13px;
+      color: #1a0dab;
+      border: 0.5px solid #dadce0;
+      border-radius: 6px;
+      padding: 5px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      background: #fff;
+      transition: background 0.15s;
+    }
+
+    .ext-link:hover { background: #f8f9fa; }
+
+    .divider {
+      border: none;
+      border-top: 0.5px solid #e8eaed;
+      margin: 18px 0;
+    }
+
+    .organic-result {
+      padding: 4px 0 18px;
+    }
+
+    .org-url {
+      font-size: 13px;
+      color: #202124;
+      margin-bottom: 3px;
+    }
+
+    .org-headline {
+      font-size: 19px;
+      color: #1a0dab;
+      margin-bottom: 5px;
+      cursor: pointer;
+      font-weight: 400;
+    }
+
+    .org-headline:hover { text-decoration: underline; }
+
+    .org-desc {
+      font-size: 13px;
+      color: #4d5156;
+      line-height: 1.65;
+    }
+
+    .branding {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 0.5px solid #e0e0e0;
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+      letter-spacing: 0.06em;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="page-label">Google Search &mdash; Ad Mockup &middot; The Urban Co-op Campaign 2026</div>
+
+    <div class="search-bar">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" value="organic food Limerick" readonly>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9aa0a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+    </div>
+
+    <div class="results-label">About 4,820,000 results (0.42 seconds)</div>
+
+    <!-- Ad 1 -->
+    <div class="section-label">Ad &mdash; organic food search</div>
+    <div class="ad-card">
+      <div class="ad-badge">Sponsored</div>
+      <div class="ad-url">
+        <div class="ad-check"></div>
+        <span class="domain">theurbancoop.ie</span>
+        <span class="path">&rsaquo; shop &rsaquo; organic</span>
+      </div>
+      <div class="ad-headline">The Urban Co-op | Buy Local. Eat Well. Limerick.</div>
+      <div class="ad-desc">Fresh certified organic produce, local meats, and whole foods &mdash; sourced from 9 Limerick farmers. Join our community of 2,500+ members. Click &amp; collect available. <strong>Become a member today.</strong></div>
+      <div class="ad-extensions">
+        <div class="ext-link">Shop organic veg</div>
+        <div class="ext-link">Become a member</div>
+        <div class="ext-link">Book a workshop</div>
+        <div class="ext-link">Our story</div>
+      </div>
+    </div>
+
+    <!-- Ad 2 -->
+    <div class="section-label">Ad &mdash; wellness search</div>
+    <div class="ad-card">
+      <div class="ad-badge">Sponsored</div>
+      <div class="ad-url">
+        <div class="ad-check"></div>
+        <span class="domain">theurbancoop.ie</span>
+        <span class="path">&rsaquo; wellness &rsaquo; classes</span>
+      </div>
+      <div class="ad-headline">Discover Wellness at The Urban Co-op | Limerick</div>
+      <div class="ad-desc">Yoga, meditation, nutrition workshops and sustainability classes &mdash; all under one roof. A community space built for your wellbeing. Open 7 days. <strong>Book your first class free.</strong></div>
+      <div class="ad-extensions">
+        <div class="ext-link">View class schedule</div>
+        <div class="ext-link">Wellness hub</div>
+        <div class="ext-link">Member discounts</div>
+      </div>
+    </div>
+
+    <!-- Ad 3 -->
+    <div class="section-label">Ad &mdash; zero waste search</div>
+    <div class="ad-card">
+      <div class="ad-badge">Sponsored</div>
+      <div class="ad-url">
+        <div class="ad-check"></div>
+        <span class="domain">theurbancoop.ie</span>
+        <span class="path">&rsaquo; zero-waste &rsaquo; refill</span>
+      </div>
+      <div class="ad-headline">Zero-Waste Grocery in Limerick | Join the Co-op</div>
+      <div class="ad-desc">Refill stations, plastic-free packaging, and a partnership with Too Good To Go. Shop ethically and support local producers. <strong>Start your zero-waste journey today.</strong></div>
+      <div class="ad-extensions">
+        <div class="ext-link">Refill shop</div>
+        <div class="ext-link">Our suppliers</div>
+        <div class="ext-link">Sustainability pledge</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Organic -->
+    <div class="section-label">Organic result (SEO target)</div>
+    <div class="organic-result">
+      <div class="org-url">theurbancoop.ie</div>
+      <div class="org-headline">The Urban Co-op &mdash; Limerick&rsquo;s Local Organic Grocery &amp; Wellness Hub</div>
+      <div class="org-desc">Certified organic produce, whole foods, and a thriving wellness community in the heart of Limerick. A social enterprise run by its members, for its community. Open Mon&ndash;Sun.</div>
+    </div>
+
+    <div class="branding">THE URBAN CO-OP &middot; CAMPAIGN 2026 &middot; MK4045 DIGITAL MARKETING</div>
+
+  </div>
+</body>
+</html>
