@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Communication Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: transparent; }
+
+  .filters {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 20px;
+  }
+  .filter-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 500;
+    padding: 6px 14px; border-radius: 20px;
+    border: 1px solid #e5e2db;
+    background: #fff; color: #888;
+    cursor: pointer; letter-spacing: 0.04em;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: #1c2b1e; color: #1c2b1e; }
+  .filter-btn.active { background: #1c2b1e; color: #fff; border-color: #1c2b1e; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e5e2db;
+    border-radius: 10px;
+    border-top: 3px solid #1c2b1e;
+    padding: 16px;
+    transition: opacity 0.2s, transform 0.2s, box-shadow 0.15s;
+  }
+  .card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.07); transform: translateY(-1px); }
+  .card.hidden { display: none; }
+
+  .card-type {
+    font-size: 9.5px; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: #3a6647; margin-bottom: 6px;
+  }
+  .card-group { font-size: 15px; font-weight: 500; color: #111; margin-bottom: 6px; }
+
+  .freq-pill {
+    display: inline-block; font-size: 10px; font-weight: 500;
+    padding: 2px 10px; border-radius: 20px;
+    background: #f4f2ee; color: #888;
+    margin-bottom: 10px; letter-spacing: 0.03em;
+  }
+
+  .card-desc { font-size: 12px; color: #777; line-height: 1.65; }
+
+  .divider { border: none; border-top: 1px solid #e5e2db; margin: 24px 0; }
+
+  .gov-label {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: #bbb; margin-bottom: 14px;
+  }
+
+  .events {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 10px;
+  }
+  .ev {
+    background: #f8f7f5;
+    border-radius: 8px;
+    padding: 14px;
+    transition: background 0.15s;
+  }
+  .ev:hover { background: #f0ede8; }
+  .ev-title {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: #555; margin-bottom: 5px;
+  }
+  .ev-desc { font-size: 12px; color: #888; line-height: 1.6; }
+  
+  body {
+  margin: 0;
+  padding: 0;
+}
+</style>
+</head>
+<body>
+
+<div class="filters">
+  <button class="filter-btn active" data-filter="all">All groups</button>
+  <button class="filter-btn" data-filter="external">External</button>
+  <button class="filter-btn" data-filter="internal">Internal</button>
+  <button class="filter-btn" data-filter="weekly">Weekly</button>
+  <button class="filter-btn" data-filter="monthly">Monthly</button>
+</div>
+
+<div class="cards">
+
+  <div class="card" data-group="external" data-freq="weekly">
+    <div class="card-type">End users</div>
+    <div class="card-group">Farmers</div>
+    <div class="freq-pill">Weekly · Quarterly</div>
+    <div class="card-desc">Operational updates, crop performance data, and hands-on training sessions.</div>
+  </div>
+
+  <div class="card" data-group="external" data-freq="monthly">
+    <div class="card-type">Financial</div>
+    <div class="card-group">Investors</div>
+    <div class="freq-pill">Monthly</div>
+    <div class="card-desc">Budget performance reports and project milestone reviews.</div>
+  </div>
+
+  <div class="card" data-group="external" data-freq="monthly">
+    <div class="card-type">Compliance</div>
+    <div class="card-group">Regulators</div>
+    <div class="freq-pill">Monthly</div>
+    <div class="card-desc">Formal IAA and EU compliance documentation on a fixed schedule.</div>
+  </div>
+
+  <div class="card" data-group="external" data-freq="monthly">
+    <div class="card-type">Domain</div>
+    <div class="card-group">Consultants</div>
+    <div class="freq-pill">Monthly</div>
+    <div class="card-desc">Integration feedback sessions and agricultural domain validation.</div>
+  </div>
+
+  <div class="card" data-group="external" data-freq="asneeded">
+    <div class="card-type">Supply chain</div>
+    <div class="card-group">Suppliers</div>
+    <div class="freq-pill">As required</div>
+    <div class="card-desc">Technical briefings on hardware and software specification updates.</div>
+  </div>
+
+  <div class="card" data-group="internal" data-freq="weekly">
+    <div class="card-type">Internal</div>
+    <div class="card-group">Core team</div>
+    <div class="freq-pill">Weekly · Milestones</div>
+    <div class="card-desc">Progress tracking, risk escalation, and scope decisions.</div>
+  </div>
+
+</div>
+
+<hr class="divider">
+
+<div class="gov-label">Governance events</div>
+<div class="events">
+  <div class="ev">
+    <div class="ev-title">Weekly standups</div>
+    <div class="ev-desc">Surface blockers, in-progress tasks, and risks early across the delivery team.</div>
+  </div>
+  <div class="ev">
+    <div class="ev-title">Phase gate reviews</div>
+    <div class="ev-desc">Formal checkpoints at each phase end to confirm quality before proceeding.</div>
+  </div>
+  <div class="ev">
+    <div class="ev-title">Change control</div>
+    <div class="ev-desc">Evaluate and approve changes to scope, budget, or schedule.</div>
+  </div>
+  <div class="ev">
+    <div class="ev-title">Stakeholder reviews</div>
+    <div class="ev-desc">Verify deliverables meet expectations and capture actionable feedback.</div>
+  </div>
+</div>
+
+<script>
+const btns = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.card');
+
+btns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    btns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    cards.forEach(card => {
+      if (f === 'all') { card.classList.remove('hidden'); return; }
+      const match = card.dataset.group === f || card.dataset.freq === f;
+      card.classList.toggle('hidden', !match);
+    });
+  });
+});
+</script>
+</body>
+</html>

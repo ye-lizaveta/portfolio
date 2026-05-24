@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Management Plan</title>
-    <link rel="stylesheet" href="css/projectmanagement.css">
+    <title>Urban Co-op</title>
+    <link rel="stylesheet" href="css/urbancoop.css">
     </head>
     <body>
         <header id="site-header">
@@ -28,7 +28,102 @@
         <a href="contact.html">Contact Me</a>
     </div>
 <main>
-
+<section class="video-section">
+<div class="content-wrapper">
+  <br>
+        <h1>Project Management</h1>
+  <p><b><b>Identification</b></b></p>
+    <p>All project stakeholders were systematically identified and formally classified at initiation 
+      to ensure comprehensive coverage across every delivery dimension.</p>
+  <p>Internal stakeholders spanned project leadership, software development, drone engineering, 
+    data analytics, finance, legal, sales and marketing, customer support, and the innovation
+    function.</p>
+  <p>External stakeholders comprised farmers as primary end users, investors, Irish and EU regulatory 
+    authorities, hardware and software suppliers, agricultural consultants, government and policy bodies,
+    insurance providers, and industry associations.</p>
+ <br>
+  <h1>Analysis</h1>
+  <p><b><b>Power / Interest Grid</b></b></p>
+    <p>Each stakeholder was assessed across two dimensions organisational power and project interest to determine the appropriate engagement strategy and resource allocation.</p>
+  <p>The objective of this campaign was to address that gap. Over a 12-month period, the strategy was designed to grow active membership,
+    establish a viable online revenue stream, and deepen community engagement without compromising the authenticity that underpins the Co-op's 
+    brand equity.</p>
+  <br>
+<iframe id="commsFrame3" src="files/power_interest_grid.html" title="mockup2" width="100%" style="border: none; display: block; height: 750px; overflow: hidden;"></iframe>
+ <p><b><b>Stakeholder Register</b></b></p>
+<p>A formal Stakeholder Register was maintained throughout the project lifecycle, providing a single source of truth 
+  for roles, classifications, and designated contacts ensuring full accountability and traceability at every stage.</p>
+ <br>    <p><b><b>Expectation Management</b></b></p>
+    <p>An Expectation Management Matrix was established to align all parties on project priorities across five dimensions.</p>
+  <p>Quality and customer satisfaction were designated non-negotiable priorities. Farmers were required to derive measurable,
+    tangible value from the system no compromise on this standard was accepted. Technology alignment between engineering and
+    innovation functions was equally critical, given its direct impact on solution accuracy and market competitiveness. Scope
+    was governed by fixed core requirements, with controlled variation permitted to accommodate individual farm configurations.
+    Schedule, while actively monitored, was treated as the lowest priority dimension, with formal escalation protocols
+    governing any deviation.</p>
+  <br>     <p><b><b>Communication Plan</b></b></p>
+    <p>A structured communication plan defined channels, frequencies, and accountability for every stakeholder group, 
+      ensuring consistent information flow and timely escalation throughout delivery.</p>
+   <br>
+<iframe id="commsFrame2" src="files/communication_plan.html" title="mockup2" width="100%" style="border: none; display: block; height: 600px; overflow: hidden;"></iframe>
+  <p>Governance operated through weekly standups, formal phase gate reviews, dedicated change control sessions, 
+    and structured stakeholder feedback meetings maintaining alignment and decision integrity at each stage of 
+    the project lifecycle.</p>  <br>
+      <p><b><b>Conclusion</b></b></p>
+    <p>Through the disciplined application of a formal stakeholder register, a structured expectation matrix,
+      and a comprehensive communication plan, all parties were engaged in proportion to their influence and interest
+      throughout the project. This governance approach directly underpinned consistent decision-making, proactive risk 
+      escalation, and a shared, well-defined understanding of success from initiation through to final delivery.</p>
+</div>
+    <div style="display: flex; justify-content: center; gap: 16px; margin: 2rem auto;">
+  <a href="files/projectmanagement.pptx" download style="
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background-color: #f0f4ee;
+    border: 1.5px solid #b0c4a8;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2d4a2d;
+    font-family: inherit;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  ">
+    <svg width="20" height="20" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="12" y1="11" x2="12" y2="17"/>
+      <polyline points="9 14 12 17 15 14"/>
+    </svg>
+    Download Presentation
+  </a>
+  <a href="files/projectmanagementreport.pdf" download style="
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background-color: #f0f4ee;
+    border: 1.5px solid #b0c4a8;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2d4a2d;
+    font-family: inherit;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  ">
+    <svg width="20" height="20" viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="12" y1="11" x2="12" y2="17"/>
+      <polyline points="9 14 12 17 15 14"/>
+    </svg>
+    Download Report
+  </a>
+</div>
+</section>
 </main>
           <footer>
         <p>Made by DelLizabeth</p>
@@ -59,6 +154,18 @@
         document.body.style.overflow = '';
       });
     });
+        
+  const frame = document.getElementById('commsFrame2');
+  frame.addEventListener('load', () => {
+    setTimeout(() => {
+      const doc = frame.contentWindow.document;
+      const height = Math.max(
+        doc.body.scrollHeight,
+        doc.documentElement.scrollHeight
+      );
+      frame.style.height = height + 'px';
+    }, 100);
+  });
   </script>        
     </body>
 </html>

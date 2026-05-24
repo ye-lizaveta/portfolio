@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS – Folding Brochure</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+
+:root {
+  --tbar: 44px;
+  --bbar: 34px;
+  --avail: calc(100vh - var(--tbar) - var(--bbar));
+  --pw: calc(100vw / 3);        /* column width  = 1/3 screen */
+  --rh: calc(var(--avail) / 3); /* row height    = 1/3 screen */
+  --green:#3e9144; --glt:#c3dfc6;
+  --spd:0.9s; --ease:cubic-bezier(.4,0,.2,1);
+}
+
+html, body { width:100%; height:100%; overflow:hidden; }
+body { background:#0f1c12; display:flex; flex-direction:column; font-family:'Oswald',sans-serif; }
+
+/* topbar */
+.topbar {
+  width:100%; height:var(--tbar); flex-shrink:0;
+  background:rgba(0,0,0,0.48); border-bottom:1px solid rgba(100,200,110,0.15);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px; gap:12px; z-index:100;
+}
+.topbar-title { color:var(--glt); font-size:.75rem; letter-spacing:.22em; text-transform:uppercase; opacity:.6; white-space:nowrap; }
+.steps-bar { display:flex; }
+.sp { font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--glt); opacity:.45; padding:6px 18px; border:1.5px solid rgba(100,200,110,.25); cursor:pointer; transition:all .2s; white-space:nowrap; user-select:none; }
+.sp:first-child { border-radius:3px 0 0 3px; }
+.sp:last-child  { border-radius:0 3px 3px 0; }
+.sp+.sp { border-left:none; }
+.sp:hover { opacity:.75; }
+.sp.active { opacity:1; background:var(--green); border-color:var(--green); color:#fff; }
+.kh { font-size:.62rem; color:var(--glt); opacity:.3; font-style:italic; white-space:nowrap; }
+
+/* stage — brochure fills full viewport */
+.stage {
+  flex:1; overflow:hidden;
+  perspective:4500px; perspective-origin:50% 40%;
+  display:flex; align-items:stretch; justify-content:flex-start;
+}
+
+/* brochure — exactly 3×3 equal squares */
+.brochure {
+  display:flex;
+  width:100%;
+  height:100%;
+  flex-shrink:0;
+  transform-style:preserve-3d;
+}
+
+/* column */
+.cw {
+  width:var(--pw); height:100%;
+  display:flex; flex-direction:column;
+  flex-shrink:0; position:relative;
+  transform-style:preserve-3d; backface-visibility:hidden;
+}
+.cw::after {
+  content:''; position:absolute; right:0; top:0; bottom:0; width:5px;
+  background:linear-gradient(to right,transparent,rgba(0,0,0,0.22) 60%,rgba(0,0,0,0.06));
+  pointer-events:none; z-index:10; backface-visibility:hidden;
+}
+
+/* top cell — exactly one square */
+.ct {
+  flex:0 0 var(--rh);
+  position:relative; overflow:hidden; backface-visibility:hidden;
+}
+.ct::after {
+  content:''; position:absolute; left:0; right:0; bottom:0; height:4px;
+  background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.15));
+  pointer-events:none; z-index:2;
+}
+
+/* vertical fold — holds the lower two squares */
+.vf {
+  flex:1; min-height:0;
+  transform-origin:top center;
+  transform-style:preserve-3d; backface-visibility:hidden;
+  transition:transform var(--spd) var(--ease);
+  transform:rotateX(0deg);
+}
+.vf.fold { transform:rotateX(172deg); }
+
+/* bottom container — splits into two equal squares */
+.cb {
+  width:100%; height:100%;
+  display:flex; flex-direction:column;
+  backface-visibility:hidden;
+}
+
+/* horizontal fold */
+.hf {
+  display:flex; flex-shrink:0;
+  width:calc(var(--pw) * 2); height:100%;
+  transform-origin:left center;
+  transform-style:preserve-3d; backface-visibility:hidden;
+  transition:transform var(--spd) var(--ease);
+  transform:rotateY(0deg);
+}
+.hf.fold { transform:rotateY(-172deg); }
+
+/* ── IMAGE SLOT ──
+   Each slot is exactly --cell × --cell.
+   object-fit:contain → full image shown, no cropping.
+   White background so letterbox areas are clean.        */
+.slot {
+  flex:1; position:relative; overflow:hidden;
+  background:#fff;
+  display:flex; align-items:center; justify-content:center;
+  backface-visibility:hidden;
+}
+.cb .slot + .slot { border-top:2px solid rgba(0,0,0,0.07); }
+
+/* placeholder: dashed border + number, hidden once image loads */
+.slot::before {
+  content:''; position:absolute; inset:10px;
+  border:2px dashed rgba(0,0,0,0.12);
+  border-radius:3px; pointer-events:none; z-index:0;
+}
+.slot-n {
+  font-size:clamp(2rem,5vmin,5rem); font-weight:700;
+  color:rgba(0,0,0,0.1); pointer-events:none; z-index:0;
+}
+
+/* the image itself */
+.slot > img {
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:contain;  /* full image, no crop */
+  display:block; z-index:1;
+}
+
+/* bottombar */
+.bottombar { flex-shrink:0; height:var(--bbar); width:100%; padding:0 20px; background:rgba(0,0,0,.3); border-top:1px solid rgba(100,200,110,.1); display:flex; align-items:center; justify-content:center; }
+.stlbl { font-size:.65rem; letter-spacing:.12em; color:var(--glt); opacity:.36; text-transform:uppercase; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-title">GEMS — Folding Brochure</span>
+  <div class="steps-bar">
+    <div class="sp active" id="sp-closed" onclick="go('closed')">① Closed</div>
+    <div class="sp"        id="sp-half"   onclick="go('half')">② Three Panels</div>
+    <div class="sp"        id="sp-open"   onclick="go('open')">③ Fully Open</div>
+  </div>
+  <span class="kh">← → arrow keys</span>
+</div>
+
+<div class="stage">
+<div class="brochure">
+
+  <!-- COL 1 — slots 1, 2, 3 -->
+  <div class="cw" style="z-index:5;">
+    <div class="ct">
+      <div class="slot"><img src="images/gemsleaflet/gemsleaflet1.jpg" alt="Image 1"><span class="slot-n">1</span></div>
+    </div>
+    <div class="vf fold" id="vf1" style="visibility:hidden;">
+      <div class="cb">
+        <div class="slot"><img src="images/gemsleaflet/gemsleaflet4.jpg" alt="Image 2"><span class="slot-n">2</span></div>
+        <div class="slot"><img src="images/gemsleaflet/gemsleaflet7.jpg" alt="Image 3"><span class="slot-n">3</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HF — col2 + col3 -->
+  <div class="hf fold" id="hf" style="visibility:hidden;">
+
+    <!-- COL 2 — slots 4, 5, 6 -->
+    <div class="cw" style="z-index:4;">
+      <div class="ct">
+        <div class="slot"><img src="images/gemsleaflet/gemsleaflet2.jpg" alt="Image 4"><span class="slot-n">4</span></div>
+      </div>
+      <div class="vf fold" id="vf2" style="visibility:hidden;">
+        <div class="cb">
+          <div class="slot"><img src="images/gemsleaflet/gemsleaflet5.jpg" alt="Image 5"><span class="slot-n">5</span></div>
+          <div class="slot"><img src="images/gemsleaflet/gemsleaflet8.jpg" alt="Image 6"><span class="slot-n">6</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3 — slots 7, 8, 9 -->
+    <div class="cw" style="z-index:3;">
+      <div class="ct">
+        <div class="slot"><img src="images/gemsleaflet/gemsleaflet3.jpg" alt="Image 7"><span class="slot-n">7</span></div>
+      </div>
+      <div class="vf fold" id="vf3" style="visibility:hidden;">
+        <div class="cb">
+          <div class="slot"><img src="images/gemsleaflet/gemsleaflet6.jpg" alt="Image 8"><span class="slot-n">8</span></div>
+          <div class="slot"><img src="images/gemsleaflet/gemsleaflet9.jpg" alt="Image 9"><span class="slot-n">9</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+<div class="bottombar">
+  <span class="stlbl" id="stlbl">Closed — press ② to open three panels</span>
+</div>
+
+<script>
+const STATES = ['closed','half','open'];
+let cur = 'closed';
+const hf  = document.getElementById('hf');
+const vf1 = document.getElementById('vf1');
+const vf2 = document.getElementById('vf2');
+const vf3 = document.getElementById('vf3');
+const stlbl = document.getElementById('stlbl');
+const SPD = 900;
+
+const labels = {
+  closed: 'Closed — press ② to open three panels',
+  half:   'Three panels — press ③ to fully unfold',
+  open:   'Fully open — press ← to fold back'
+};
+
+function fold(el) {
+  el.classList.add('fold');
+  setTimeout(() => { if (el.classList.contains('fold')) el.style.visibility = 'hidden'; }, SPD + 80);
+}
+function unfold(el) {
+  el.style.visibility = 'visible';
+  requestAnimationFrame(() => el.classList.remove('fold'));
+}
+
+function go(next) {
+  if (next === cur) return;
+  const prev = cur; cur = next;
+  STATES.forEach(s => document.getElementById('sp-'+s).classList.toggle('active', s === next));
+  stlbl.textContent = labels[next];
+
+  if (next === 'closed') {
+    if (prev === 'open') { fold(vf1); fold(vf2); fold(vf3); setTimeout(() => fold(hf), SPD + 60); }
+    else fold(hf);
+  } else if (next === 'half') {
+    if (prev === 'closed') unfold(hf);
+    else { fold(vf1); fold(vf2); fold(vf3); }
+  } else if (next === 'open') {
+    if (prev === 'closed') {
+      unfold(hf);
+      setTimeout(() => { unfold(vf1); setTimeout(() => unfold(vf2), 110); setTimeout(() => unfold(vf3), 220); }, SPD + 60);
+    } else {
+      unfold(vf1); setTimeout(() => unfold(vf2), 110); setTimeout(() => unfold(vf3), 220);
+    }
+  }
+}
+
+document.addEventListener('keydown', e => {
+  const i = STATES.indexOf(cur);
+  if (e.key === 'ArrowRight' && i < STATES.length-1) go(STATES[i+1]);
+  if (e.key === 'ArrowLeft'  && i > 0)               go(STATES[i-1]);
+});
+</script>
+</body>
+</html>

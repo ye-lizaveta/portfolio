@@ -1,0 +1,10 @@
+      <a href="futuremuseums.html" class="project-card" data-tags="graphic">
+        <img src="images/project6.jpg" alt="directed studies">
+        <div class="project-overlay">
+          <h3>Directed Studies — Future of Museums</h3>
+          <p>Information Design, Print Design, Editorial</p>
+        </div>
+      </a>
+      
+
+in graphic design

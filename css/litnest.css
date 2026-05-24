@@ -250,6 +250,8 @@ main {
 .play-btn:hover {
   transform: scale(1.1);
 }
+
+
 /* ── TWO-COLUMN LAYOUT ── */
 .page-layout {
   display: flex;
