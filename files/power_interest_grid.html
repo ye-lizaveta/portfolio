@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power / Interest Grid</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: transparent; }
+
+  .wrap { background: #fff; border: 1px solid #e5e2db; border-radius: 12px; padding: 24px; user-select: none; }
+
+  .grid-outer { position: relative; padding-left: 32px; padding-bottom: 28px; }
+
+  .y-axis {
+    position: absolute; left: 0; top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: #bbb;
+    white-space: nowrap;
+  }
+
+  .field {
+    position: relative; width: 100%; padding-bottom: 62%;
+    border: 1px solid #e5e2db; border-radius: 8px; overflow: visible;
+  }
+  .field-inner { position: absolute; inset: 0; border-radius: 8px; overflow: hidden; }
+
+  .q {
+    position: absolute; width: 50%; height: 50%;
+    display: flex; align-items: flex-start; padding: 10px 12px;
+  }
+  .q.tl { top:0; left:0; background:#f8f7f5; border-right:1px dashed #ddd; border-bottom:1px dashed #ddd; }
+  .q.tr { top:0; right:0; background:#f0f5f1; border-bottom:1px dashed #ddd; }
+  .q.bl { bottom:0; left:0; background:#f8f7f5; border-right:1px dashed #ddd; }
+  .q.br { bottom:0; right:0; background:#f8f7f5; }
+  .q-label { font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
+  .q.tl .q-label, .q.bl .q-label, .q.br .q-label { color: #ccc; }
+  .q.tr .q-label { color: #3a6647; }
+
+  .node {
+    position: absolute; transform: translate(-50%, -50%);
+    cursor: pointer; z-index: 2;
+  }
+  .node-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    margin: 0 auto;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border: 2px solid rgba(255,255,255,0.6);
+  }
+  .node:hover .node-dot { transform: scale(1.5); box-shadow: 0 0 0 3px rgba(0,0,0,0.08); }
+  .node.active .node-dot { transform: scale(1.6); box-shadow: 0 0 0 4px rgba(0,0,0,0.12); }
+
+  .node-label {
+    font-size: 9.5px; color: #555; white-space: nowrap;
+    text-align: center; margin-top: 4px;
+    transition: color 0.15s;
+  }
+  .node:hover .node-label, .node.active .node-label { color: #111; font-weight: 500; }
+
+  .x-ends {
+    display: flex; justify-content: space-between;
+    padding: 6px 0 0;
+    font-size: 10px; color: #bbb; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  .tooltip {
+    position: absolute;
+    background: #1c2b1e; color: #fff;
+    font-size: 12px; border-radius: 8px;
+    padding: 10px 14px; pointer-events: none;
+    opacity: 0; transition: opacity 0.2s;
+    z-index: 10; min-width: 180px;
+    transform: translateX(-50%);
+    line-height: 1.6;
+  }
+  .tooltip.show { opacity: 1; }
+  .tooltip-name { font-weight: 500; font-size: 13px; margin-bottom: 4px; }
+  .tooltip-strategy { font-size: 11px; opacity: 0.7; }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid #f0ede8;
+  }
+  .leg { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: #666; }
+  .leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+  .hint { font-size: 11px; color: #bbb; text-align: center; margin-top: 12px; }
+  
+  body {
+  margin: 0;
+  padding: 0;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="grid-outer">
+    <div class="y-axis">← Power →</div>
+
+    <div class="field" id="field">
+      <div class="field-inner">
+        <div class="q tl"><span class="q-label">Keep satisfied</span></div>
+        <div class="q tr"><span class="q-label">Manage closely</span></div>
+        <div class="q bl"><span class="q-label">Monitor</span></div>
+        <div class="q br"><span class="q-label">Keep informed</span></div>
+      </div>
+    </div>
+
+    <div class="x-ends">
+      <span>Low interest</span>
+      <span>High interest</span>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="leg"><span class="leg-dot" style="background:#1c2b1e;"></span>Manage closely</div>
+    <div class="leg"><span class="leg-dot" style="background:#b07d2e;"></span>Keep satisfied / informed</div>
+    <div class="leg"><span class="leg-dot" style="background:#3a6647;"></span>Secondary internal</div>
+    <div class="leg"><span class="leg-dot" style="background:#bbb;"></span>Monitor</div>
+  </div>
+  <p class="hint">Hover or tap any dot to see engagement strategy</p>
+</div>
+
+<script>
+const stakeholders = [
+  { name: 'Project Sponsor',    x: 72, y: 20, color: '#1c2b1e', strategy: 'Manage closely — direct weekly updates, key decisions escalated immediately.' },
+  { name: 'Project Manager',    x: 83, y: 30, color: '#1c2b1e', strategy: 'Manage closely — daily coordination, full visibility across all workstreams.' },
+  { name: 'Core Team',          x: 90, y: 41, color: '#1c2b1e', strategy: 'Manage closely — weekly standups, phase reviews, and change control sessions.' },
+  { name: 'Innovation Dept.',   x: 67, y: 46, color: '#3a6647', strategy: 'Manage closely — continuous alignment with engineering on technology decisions.' },
+  { name: 'Government',         x: 18, y: 22, color: '#b07d2e', strategy: 'Keep satisfied — structured compliance reporting aligned to national policy.' },
+  { name: 'Regulators (IAA/EU)',x: 30, y: 40, color: '#b07d2e', strategy: 'Keep satisfied — monthly formal compliance documentation on a fixed schedule.' },
+  { name: 'Farmers',            x: 72, y: 72, color: '#b07d2e', strategy: 'Keep informed — weekly updates, quarterly training, onboarding support.' },
+  { name: 'Sales Dept.',        x: 57, y: 81, color: '#3a6647', strategy: 'Keep informed — monthly newsletters and milestone progress updates.' },
+  { name: 'Marketing',          x: 83, y: 83, color: '#3a6647', strategy: 'Keep informed — campaign briefings and launch milestone communications.' },
+  { name: 'Software Suppliers', x: 22, y: 73, color: '#bbb',    strategy: 'Monitor — engage as needed for specification and integration updates.' },
+  { name: 'Hardware Suppliers', x: 20, y: 86, color: '#bbb',    strategy: 'Monitor — procure and brief on component requirements as required.' },
+];
+
+const field = document.getElementById('field');
+const tooltip = document.createElement('div');
+tooltip.className = 'tooltip';
+tooltip.innerHTML = '<div class="tooltip-name"></div><div class="tooltip-strategy"></div>';
+field.appendChild(tooltip);
+
+let active = null;
+
+stakeholders.forEach((s, i) => {
+  const node = document.createElement('div');
+  node.className = 'node';
+  node.style.left = s.x + '%';
+  node.style.top = s.y + '%';
+  node.innerHTML = `<div class="node-dot" style="background:${s.color};"></div><div class="node-label">${s.name}</div>`;
+
+  node.addEventListener('mouseenter', () => showTooltip(node, s));
+  node.addEventListener('mouseleave', () => { if (active !== node) hideTooltip(); });
+  node.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (active === node) { active = null; hideTooltip(); node.classList.remove('active'); }
+    else {
+      if (active) active.classList.remove('active');
+      active = node;
+      node.classList.add('active');
+      showTooltip(node, s);
+    }
+  });
+
+  field.appendChild(node);
+});
+
+document.addEventListener('click', () => {
+  if (active) { active.classList.remove('active'); active = null; }
+  hideTooltip();
+});
+
+function showTooltip(node, s) {
+  tooltip.querySelector('.tooltip-name').textContent = s.name;
+  tooltip.querySelector('.tooltip-strategy').textContent = s.strategy;
+  const nx = parseFloat(node.style.left);
+  const ny = parseFloat(node.style.top);
+  tooltip.style.left = nx + '%';
+  tooltip.style.top = (ny < 50) ? 'calc(' + ny + '% + 28px)' : 'auto';
+  tooltip.style.bottom = (ny >= 50) ? 'calc(' + (100 - ny) + '% + 24px)' : 'auto';
+  tooltip.classList.add('show');
+}
+
+function hideTooltip() { tooltip.classList.remove('show'); }
+</script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMS – Interactive Folding Brochure</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --pw: calc(100vw / 3);
+  --sq: var(--pw);         /* top section = perfect square */
+  --tbar: 44px;
+  --bbar: 34px;
+  --green:#3e9144; --gdark:#24612a; --glt:#c3dfc6; --red:#d23530;
+  --cover:#b6cfca; --white:#ffffff; --pale:#e7f3ea;
+  --spd: 0.9s; --ease: cubic-bezier(.4,0,.2,1);
+}
+
+html, body { width:100%; height:100%; overflow:hidden; }
+body { background:#0f1c12; display:flex; flex-direction:column; font-family:'Source Sans 3',sans-serif; }
+
+/* ── topbar ── */
+.topbar {
+  width:100%; height:var(--tbar); flex-shrink:0;
+  background:rgba(0,0,0,0.48); border-bottom:1px solid rgba(100,200,110,0.15);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px; gap:12px; z-index:100;
+}
+.topbar-title { font-family:'Oswald',sans-serif; color:var(--glt); font-size:0.75rem; letter-spacing:0.22em; text-transform:uppercase; opacity:0.6; white-space:nowrap; }
+.steps-bar { display:flex; }
+.sp {
+  font-family:'Oswald',sans-serif; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--glt); opacity:0.45; padding:6px 18px;
+  border:1.5px solid rgba(100,200,110,0.25); cursor:pointer; transition:all .2s; white-space:nowrap; user-select:none;
+}
+.sp:first-child { border-radius:3px 0 0 3px; }
+.sp:last-child  { border-radius:0 3px 3px 0; }
+.sp+.sp { border-left:none; }
+.sp:hover { opacity:.75; }
+.sp.active { opacity:1; background:var(--green); border-color:var(--green); color:#fff; }
+.kh { font-size:.62rem; color:var(--glt); opacity:.3; font-style:italic; white-space:nowrap; }
+
+/* ── stage ── */
+.stage {
+  flex:1; overflow:hidden;
+  perspective:3200px;
+  perspective-origin:33% 20%;
+  display:flex; align-items:stretch;
+}
+
+/* ── brochure ── */
+.brochure {
+  display:flex; width:100%; height:100%;
+  align-items:stretch;
+  transform-style:preserve-3d;
+}
+
+/* ── column wrapper ── */
+.cw {
+  width:var(--pw); height:100%;
+  display:flex; flex-direction:column;
+  flex-shrink:0; position:relative;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+}
+/* right-edge crease shadow */
+.cw::after {
+  content:''; position:absolute; right:0; top:0; bottom:0; width:7px;
+  background:linear-gradient(to right,transparent,rgba(0,0,0,0.16) 55%,rgba(0,0,0,0.05));
+  pointer-events:none; z-index:10;
+}
+
+/* ── top square ── */
+.ct {
+  flex:0 0 var(--sq); overflow:hidden; position:relative;
+  backface-visibility:hidden;
+}
+/* horizontal crease at fold line */
+.ct::after {
+  content:''; position:absolute; left:0; right:0; bottom:0; height:5px;
+  background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.12));
+  pointer-events:none;
+}
+
+/* ── vertical fold (bottom section) ── */
+.vf {
+  flex:1; min-height:0;
+  transform-origin:top center;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+  transition:transform var(--spd) var(--ease);
+  transform:rotateX(0deg);
+}
+.vf.fold { transform:rotateX(172deg); }
+
+.cb { width:100%; height:100%; display:flex; flex-direction:column; overflow:hidden; backface-visibility:hidden; }
+
+/* ── horizontal fold ── */
+.hf {
+  display:flex; flex-shrink:0;
+  width:calc(var(--pw)*2); height:100%;
+  transform-origin:left center;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+  transition:transform var(--spd) var(--ease);
+  transform:rotateY(0deg);
+}
+.hf.fold { transform:rotateY(-172deg); }
+
+/* ── panel ── */
+.p {
+  padding:clamp(13px,1.7vw,27px) clamp(11px,1.4vw,23px);
+  overflow:hidden; position:relative;
+}
+
+/* ── cover ── */
+.ctc { background:var(--cover); display:flex; align-items:center; justify-content:center; }
+.cwp { display:flex; flex-direction:column; align-items:center; gap:clamp(6px,1vh,15px); text-align:center; padding:10px; }
+.shld { width:clamp(60px,7vw,120px); height:auto; }
+.wm { font-family:'Oswald',sans-serif; font-size:clamp(1.7rem,3.8vw,4.8rem); font-weight:700; background:#111; color:#fff; padding:2px clamp(10px,1.1vw,18px) 5px; border-radius:3px; letter-spacing:.06em; }
+.cs { font-family:'Oswald',sans-serif; font-size:clamp(.52rem,.78vw,.98rem); letter-spacing:.2em; text-transform:uppercase; color:#1e5426; line-height:2; }
+.tg { font-size:clamp(.55rem,.74vw,.94rem); color:#2d5c33; font-style:italic; line-height:1.6; max-width:24ch; }
+
+/* ── typography ── */
+.sh { font-family:'Oswald',sans-serif; font-size:clamp(.82rem,1.25vw,1.6rem); font-weight:600; color:var(--gdark); margin-bottom:clamp(3px,.45vh,7px); }
+.shsm { font-family:'Oswald',sans-serif; font-size:clamp(.72rem,1vw,1.28rem); font-weight:600; color:var(--gdark); margin-bottom:clamp(3px,.38vh,6px); }
+.bd { font-size:clamp(.64rem,.87vw,1.08rem); line-height:1.58; color:#444; margin-bottom:clamp(4px,.65vh,10px); }
+.lr { font-weight:700; color:var(--red); }
+.dv { border:none; border-top:1px solid rgba(0,0,0,.09); margin:clamp(4px,.65vh,10px) 0; }
+.ab { width:30px; height:3px; background:var(--green); border-radius:2px; margin-bottom:clamp(4px,.55vh,8px); }
+
+/* ── steps list ── */
+.sl { list-style:none; display:flex; flex-direction:column; gap:clamp(6px,.9vh,14px); }
+.si { display:flex; gap:clamp(6px,.85vw,12px); align-items:flex-start; }
+.sn { width:clamp(20px,1.9vw,32px); height:clamp(20px,1.9vw,32px); border-radius:50%; font-family:'Oswald',sans-serif; font-size:clamp(.58rem,.78vw,.98rem); font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+.sg { background:var(--green); color:#fff; }
+.sr { background:var(--red);   color:#fff; }
+.sd { background:#8b1a1a;     color:#fff; }
+.st { font-size:clamp(.62rem,.82vw,1.04rem); line-height:1.5; color:#444; }
+.st b { display:block; color:#1a1a1a; font-weight:600; margin-bottom:2px; }
+
+/* ── bullets ── */
+.bl { list-style:none; display:flex; flex-direction:column; gap:clamp(6px,.85vh,13px); }
+.bi { display:flex; gap:clamp(6px,.75vw,11px); align-items:flex-start; }
+.d2 { width:clamp(5px,.56vw,8px); height:clamp(5px,.56vw,8px); border-radius:50%; background:var(--green); flex-shrink:0; margin-top:clamp(4px,.52vh,7px); }
+.bi p { font-size:clamp(.62rem,.82vw,1.04rem); line-height:1.55; color:#444; }
+
+/* ── stats ── */
+.sts { display:flex; flex-direction:column; gap:clamp(4px,.5vh,8px); }
+.s2 { display:flex; align-items:center; gap:clamp(6px,.75vw,11px); background:rgba(62,145,68,.08); border-left:3px solid var(--green); padding:clamp(4px,.58vh,8px) clamp(6px,.78vw,10px); border-radius:0 4px 4px 0; }
+.s2 .n { font-family:'Oswald',sans-serif; font-size:clamp(.85rem,1.3vw,1.65rem); font-weight:700; color:var(--green); flex-shrink:0; min-width:clamp(26px,2.5vw,42px); }
+.s2 .l { font-size:clamp(.55rem,.74vw,.94rem); color:#444; line-height:1.36; }
+
+/* ── engage ── */
+.et { font-family:'Oswald',sans-serif; font-size:clamp(.63rem,.88vw,1.1rem); color:#333; text-align:center; line-height:1.5; margin-bottom:2px; }
+.en { font-family:'Oswald',sans-serif; font-size:clamp(.85rem,1.3vw,1.65rem); font-weight:700; color:var(--gdark); text-align:center; margin-bottom:clamp(4px,.6vh,10px); }
+.db { background:var(--gdark); color:#fff; padding:clamp(8px,1vh,15px); border-radius:5px; }
+.db h4 { font-family:'Oswald',sans-serif; font-size:clamp(.63rem,.84vw,1.05rem); color:var(--glt); margin-bottom:clamp(2px,.32vh,5px); letter-spacing:.06em; }
+.db p  { font-size:clamp(.58rem,.76vw,.96rem); line-height:1.6; color:rgba(195,225,198,.9); }
+
+/* ── contact ── */
+.cc { background:#1a1a1a; color:#fff; padding:clamp(8px,1vh,15px); border-radius:5px; text-align:center; margin-bottom:clamp(4px,.55vh,8px); }
+.cn { font-family:'Oswald',sans-serif; font-size:clamp(.68rem,.96vw,1.2rem); color:var(--glt); margin-bottom:2px; }
+.cr { font-size:clamp(.54rem,.7vw,.88rem); color:#aaa; margin-bottom:clamp(3px,.42vh,7px); }
+.ci { font-size:clamp(.56rem,.72vw,.9rem); color:#ccc; line-height:1.85; }
+
+/* ── partners ── */
+.pg { display:grid; grid-template-columns:1fr 1fr; gap:clamp(3px,.48vh,7px); margin-top:clamp(3px,.44vh,7px); }
+.pr { background:rgba(62,145,68,.08); border:1px solid rgba(62,145,68,.2); border-radius:4px; padding:clamp(4px,.55vh,8px) clamp(5px,.58vw,8px); }
+.pr .nm { font-family:'Oswald',sans-serif; font-size:clamp(.52rem,.66vw,.82rem); color:var(--gdark); font-weight:600; }
+.pr .cy { font-size:clamp(.48rem,.58vw,.74rem); color:#777; margin-top:1px; }
+
+/* ── eu + website ── */
+.eu { display:flex; align-items:center; gap:clamp(6px,.75vw,11px); background:#003db5; color:#ffd700; padding:clamp(7px,.88vh,13px) clamp(8px,.92vw,13px); border-radius:5px; margin-bottom:clamp(6px,.78vh,12px); }
+.eus { font-size:clamp(.72rem,.94vw,1.18rem); letter-spacing:-1px; line-height:1.4; flex-shrink:0; }
+.eu p { font-size:clamp(.53rem,.7vw,.88rem); line-height:1.5; }
+.ws { display:flex; align-items:center; gap:6px; font-family:'Oswald',sans-serif; font-size:clamp(.78rem,1.15vw,1.44rem); color:var(--gdark); text-decoration:none; border-bottom:2px solid var(--gdark); padding-bottom:2px; width:fit-content; margin-bottom:clamp(4px,.58vh,9px); }
+.it { font-size:clamp(.55rem,.72vw,.9rem); line-height:1.6; color:#555; font-style:italic; }
+
+/* ── bottombar ── */
+.bottombar { flex-shrink:0; height:var(--bbar); width:100%; padding:0 20px; background:rgba(0,0,0,.3); border-top:1px solid rgba(100,200,110,.1); display:flex; align-items:center; justify-content:center; }
+.stlbl { font-family:'Oswald',sans-serif; font-size:.65rem; letter-spacing:.12em; color:var(--glt); opacity:.36; text-transform:uppercase; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-title">GEMS — Folding Brochure</span>
+  <div class="steps-bar">
+    <div class="sp active" id="sp-closed" onclick="go('closed')">① Closed</div>
+    <div class="sp"        id="sp-half"   onclick="go('half')">② Three Panels</div>
+    <div class="sp"        id="sp-open"   onclick="go('open')">③ Fully Open</div>
+  </div>
+  <span class="kh">← → arrow keys</span>
+</div>
+
+<div class="stage">
+<div class="brochure">
+
+  <!-- ══════ COL 1 ══════ -->
+  <div class="cw" style="z-index:5;">
+    <!-- TOP SQUARE — cover -->
+    <div class="ct ctc">
+      <div class="cwp">
+        <svg class="shld" viewBox="0 0 110 120" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="g1" cx="50%" cy="38%"><stop offset="0%" stop-color="#72cc77"/><stop offset="100%" stop-color="#256b2b"/></radialGradient></defs>
+          <path d="M55 5 L106 27 L106 64 C106 90 82 110 55 118 C28 110 4 90 4 64 L4 27 Z" fill="url(#g1)" stroke="#1a4d1f" stroke-width="2.5"/>
+          <path d="M55 17 L97 35 L97 64 C97 86 75 103 55 110 C35 103 13 86 13 64 L13 35 Z" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1.5"/>
+          <path d="M55 31 L83 46 L83 65 C83 80 71 91 55 97 C39 91 27 80 27 65 L27 46 Z" fill="rgba(0,0,0,.18)"/>
+          <text x="55" y="72" text-anchor="middle" font-family="'Oswald',sans-serif" font-weight="700" font-size="18" fill="rgba(255,255,255,.9)">GEMS</text>
+        </svg>
+        <div class="wm">GEMS</div>
+        <div class="cs">Games as a<br>Multi-Layered<br>Security Thread</div>
+        <div class="tg">Protecting citizens from extremist recruitment in the online gaming ecosystem.</div>
+      </div>
+    </div>
+    <!-- BOTTOM — folds up -->
+    <div class="vf fold" id="vf1">
+      <div class="cb" style="background:#d4e8d2;">
+        <div class="p" style="flex:1;">
+          <div class="sh">Key Outcomes</div>
+          <div class="ab"></div>
+          <ul class="bl">
+            <li class="bi"><div class="d2"></div><p>Enhance the scientific knowledge base and develop a novel academic discipline — <strong>Sociology of Gaming and Radicalization</strong>.</p></li>
+            <li class="bi"><div class="d2"></div><p>Understand methods of <strong>preselection and extremist grooming</strong> of vulnerable individuals in the gaming space.</p></li>
+            <li class="bi"><div class="d2"></div><p>Provide EPAs with <strong>training materials, methods and tools</strong> to effectively tackle extremism in gaming.</p></li>
+          </ul>
+        </div>
+        <div class="p" style="flex:0 0 auto;background:#e8f4e9;border-top:1px solid rgba(0,0,0,.06);">
+          <div class="shsm">Broad Scope</div>
+          <p class="bd">Computer, mobile, console games and streaming platforms — the full modern gaming ecosystem.</p>
+          <p class="it">By minimising recruitment at its roots, GEMS protects EU citizens where they are most vulnerable.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ HF — col2 + col3 unfold as one ══════ -->
+  <div class="hf fold" id="hf">
+
+    <!-- COL 2 -->
+    <div class="cw" style="z-index:4;">
+      <!-- TOP SQUARE -->
+      <div class="ct" style="background:var(--white);">
+        <div class="p" style="height:100%;display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <div class="sh">Who Are We?</div>
+            <div class="ab"></div>
+            <p class="bd">GEMS is a Horizon-funded project to <strong>stop extremist recruitment</strong> in online gaming environments.</p>
+            <p class="bd"><span class="lr">The Problem:</span> Extremist groups exploit in-game communication to identify, groom, and recruit vulnerable players — particularly young people.</p>
+            <hr class="dv">
+            <div class="shsm">The Watchtower Platform</div>
+            <p class="bd">Detects and disrupts grooming attempts automatically — catching radicalization before it takes hold.</p>
+          </div>
+          <div class="sts">
+            <div class="s2"><span class="n">3+</span><span class="l">Years of EU Commission funding</span></div>
+            <div class="s2"><span class="n">10+</span><span class="l">Partner organisations across Europe</span></div>
+            <div class="s2"><span class="n">1st</span><span class="l">Sociology of Gaming & Radicalization</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- BOTTOM -->
+      <div class="vf fold" id="vf2">
+        <div class="cb" style="background:#f7fbf7;">
+          <div class="p" style="flex:1;">
+            <div class="et">European Network Against<br>Gaming Related Extremism</div>
+            <div class="en">ENgaGE</div>
+            <p class="bd" style="text-align:center;">For the first time, ENgaGE unites EPAs, security practitioners, the gaming community, academics, and civil society under one network.</p>
+            <div class="db">
+              <h4>The Mission</h4>
+              <p>Consistently monitor and remove the threat of extremism from the gaming ecosystem — building a safer digital world for all.</p>
+            </div>
+          </div>
+          <div class="p" style="flex:0 0 auto;background:var(--pale);border-top:1px solid rgba(0,0,0,.05);">
+            <div class="shsm">Project Coordinator</div>
+            <div class="cc">
+              <div class="cn">Dr Maja Halilovic-Pastuovic</div>
+              <div class="cr">Assistant Research Professor</div>
+              <div class="ci">Trinity College Dublin<br>School of Religion · Loyola Institute<br>Dublin 2, Republic of Ireland</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3 -->
+    <div class="cw" style="z-index:3;">
+      <!-- TOP SQUARE -->
+      <div class="ct" style="background:var(--pale);">
+        <div class="p" style="height:100%;">
+          <div class="sh">The Radicalization Pipeline</div>
+          <div class="ab"></div>
+          <p class="bd">How extremists exploit the gaming space:</p>
+          <ul class="sl">
+            <li class="si"><div class="sn sg">1</div><div class="st"><b>Online Multiplayer Entry</b>Player enters an environment with embedded communication tools.</div></li>
+            <li class="si"><div class="sn sg">2</div><div class="st"><b>Preselection</b>Extremists identify vulnerable individuals using behavioural cues.</div></li>
+            <li class="si"><div class="sn sr">3</div><div class="st"><b>Soft Radicalization</b>Gradual exposure to extremist ideas through casual in-game chat.</div></li>
+            <li class="si"><div class="sn sd">4</div><div class="st"><b>Hard Recruitment</b>Full recruitment into extremist networks, insulated by established trust.</div></li>
+          </ul>
+        </div>
+      </div>
+      <!-- BOTTOM -->
+      <div class="vf fold" id="vf3">
+        <div class="cb" style="background:var(--white);">
+          <div class="p" style="flex:1;">
+            <div class="shsm">Project Partners</div>
+            <div class="pg">
+              <div class="pr"><div class="nm">Trinity College Dublin</div><div class="cy">Ireland 🇮🇪</div></div>
+              <div class="pr"><div class="nm">Counter Extremism Project</div><div class="cy">Germany 🇩🇪</div></div>
+              <div class="pr"><div class="nm">Moonshot CVE</div><div class="cy">United Kingdom 🇬🇧</div></div>
+              <div class="pr"><div class="nm">ISD Global</div><div class="cy">Belgium 🇧🇪</div></div>
+              <div class="pr"><div class="nm">T6 Ecosystems</div><div class="cy">Spain 🇪🇸</div></div>
+              <div class="pr"><div class="nm">CEPS Brussels</div><div class="cy">Belgium 🇧🇪</div></div>
+            </div>
+          </div>
+          <div class="p" style="flex:0 0 auto;background:#f0f8f1;border-top:1px solid rgba(0,0,0,.05);">
+            <div class="eu">
+              <div class="eus">★★★★★★<br>★★★★★★</div>
+              <p>Co-funded by the <strong>European Commission</strong> under the Horizon Research &amp; Innovation Programme.</p>
+            </div>
+            <a class="ws" href="https://projectgems.eu" target="_blank">🌐 projectgems.eu</a>
+            <p class="it">The Watchtower Platform and ENgaGE network will diminish the operational capacity of extremist groups across Europe.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /hf -->
+
+</div><!-- /brochure -->
+</div><!-- /stage -->
+
+<div class="bottombar">
+  <span class="stlbl" id="stlbl">Closed — press ② to open three panels</span>
+</div>
+
+<script>
+const STATES = ['closed','half','open'];
+let cur = 'closed';
+
+const hf  = document.getElementById('hf');
+const vf1 = document.getElementById('vf1');
+const vf2 = document.getElementById('vf2');
+const vf3 = document.getElementById('vf3');
+const stlbl = document.getElementById('stlbl');
+const SPD = 920;
+
+const labels = {
+  closed: 'Closed — press ② to open three panels',
+  half:   'Three panels — press ③ to fully unfold',
+  open:   'Fully open — press ← to fold back'
+};
+
+function f(el, on) { el.classList.toggle('fold', on); }
+
+function go(next) {
+  if (next === cur) return;
+  const prev = cur; cur = next;
+  STATES.forEach(s => document.getElementById('sp-'+s).classList.toggle('active', s === next));
+  stlbl.textContent = labels[next];
+
+  if (next === 'closed') {
+    // fold bottom sections first, then fold panels shut
+    f(vf1,true); f(vf2,true); f(vf3,true);
+    const wait = prev === 'open' ? SPD + 50 : 0;
+    setTimeout(() => f(hf, true), wait);
+
+  } else if (next === 'half') {
+    if (prev === 'closed') {
+      f(hf, false);          // open all three panels (vfs stay folded)
+    } else {
+      // from open → fold bottom sections back up, keep panels open
+      f(vf1,true); f(vf2,true); f(vf3,true);
+    }
+
+  } else if (next === 'open') {
+    if (prev === 'closed') {
+      // open panels first, then unfold bottom sections
+      f(hf, false);
+      setTimeout(() => {
+        f(vf1, false);
+        setTimeout(() => f(vf2, false), 100);
+        setTimeout(() => f(vf3, false), 200);
+      }, SPD + 60);
+    } else {
+      // from half → just unfold bottom sections with stagger
+      f(vf1, false);
+      setTimeout(() => f(vf2, false), 100);
+      setTimeout(() => f(vf3, false), 200);
+    }
+  }
+}
+
+document.addEventListener('keydown', e => {
+  const i = STATES.indexOf(cur);
+  if (e.key === 'ArrowRight' && i < STATES.length-1) go(STATES[i+1]);
+  if (e.key === 'ArrowLeft'  && i > 0)               go(STATES[i-1]);
+});
+</script>
+</body>
+</html>
